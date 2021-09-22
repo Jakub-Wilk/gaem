@@ -40,7 +40,29 @@ const component_to_hex = (c) => {
 
 const rgb_to_hex = (rgb) => `#${rgb.map(component_to_hex).join("")}`
 
-const convert_to_tilemap = (image) => {
+const image_to_level = (image, tilemap) => {
+    let canvas = document.createElement("canvas")
+    canvas.width = image.width
+    canvas.height = image.height
+    const context = canvas.getContext('2d')
+    context.drawImage(image, 0, 0, image.width, image.height)
+    const image_data = context.getImageData(0, 0, canvas.width, canvas.height)
+    const pixel_data = image_data.data
+    let level = []
+    for (const column of Array(canvas.width).keys()) {
+        level.push([])
+        for (const row of Array(canvas.height).keys()) {
+            const pixel_offset = (row * canvas.width + column) * 4
+            // console.log(pixel_offset, row, canvas.height, column, row * canvas.height)
+            let pixel_color = [pixel_data[pixel_offset], pixel_data[pixel_offset + 1], pixel_data[pixel_offset + 2]]
+            pixel_color = rgb_to_hex(pixel_color)
+            console.log(pixel_color)
+            let tile = tilemap["color-to-id"][pixel_color]
+            level[column].push(tile)
+        }
+    }
+    return level
+}
     
 }
 
