@@ -1,5 +1,3 @@
-let testfile
-
 const get_file_data_url = (file) => {
     return new Promise((resolve, reject) => {
         const fr = new FileReader()
@@ -18,7 +16,7 @@ const get_images_from_input = (input) => {
         let images = []
 
         if (file_list.length == 0) {
-            reject([])
+            reject("No file selected!")
         } else {
             const arr_file_list = Array.from(file_list)
             let readers = arr_file_list.map(get_file_data_url)
@@ -29,7 +27,6 @@ const get_images_from_input = (input) => {
                     image.src = value
                     images.push(image)
                 })
-                console.log("returning")
                 resolve(images)
             })
         }
