@@ -53,17 +53,15 @@ const image_to_level = (image, tilemap) => {
         level.push([])
         for (const row of Array(canvas.height).keys()) {
             const pixel_offset = (row * canvas.width + column) * 4
-            // console.log(pixel_offset, row, canvas.height, column, row * canvas.height)
             let pixel_color = [pixel_data[pixel_offset], pixel_data[pixel_offset + 1], pixel_data[pixel_offset + 2]]
             pixel_color = rgb_to_hex(pixel_color)
-            console.log(pixel_color)
             let tile = tilemap["color-to-id"][pixel_color]
             level[column].push(tile)
         }
     }
     return level
 }
-    
+
 const download_levels = (levels) => {
     return new Promise((resolve, reject) => {
         try {
@@ -82,7 +80,7 @@ const download_levels = (levels) => {
             })
         } catch (error) {
             reject()
-}
+        }
         resolve()
     })
 }
