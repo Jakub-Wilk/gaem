@@ -8,16 +8,16 @@
         <input type="file" accept="image/*" multiple>
         <span>_</span>
         <div>Download</div>
-        <script src="scripts/convaert.js"></script>
+        <script src="scripts/convaert.js" async></script>
+        <script src="assets/tilemap.js" async></script>
         <script>
-            let images
             document.querySelector("div").onclick = () => {
-                get_images_from_input(document.querySelector("input")).then(result => {
-                    let images = result
-                    console.log(images)
-                }, no_images => {
-                    document.querySelector("span").innerText = "No image selected!"
-                })
+                let images_as_levels
+                get_images_from_input(document.querySelector("input"))
+                .then(images => download_levels(images.map((image) => image_to_level(image, tilemap))))
+                // .catch((error) => {
+                //     document.querySelector("span").innerText = error
+                // })
             }
         </script>
     </body>
