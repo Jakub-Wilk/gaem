@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Convaert</title>
+        <link rel="stylesheet" href="styles/convaert.css">
+    </head>
+    <body>
+        <input type="file" accept="image/*" multiple>
+        <span>_</span>
+        <div>Download</div>
+        <script src="scripts/convaert.js"></script>
+        <script>
+            let images
+            document.querySelector("div").onclick = () => {
+                get_images_from_input(document.querySelector("input")).then(result => {
+                    let images = result
+                    console.log(images)
+                }, no_images => {
+                    document.querySelector("span").innerText = "No image selected!"
+                })
+            }
+        </script>
+    </body>
+</html>
