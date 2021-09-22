@@ -64,20 +64,25 @@ const image_to_level = (image, tilemap) => {
     return level
 }
     
+const download_levels = (levels) => {
+    return new Promise((resolve, reject) => {
+        try {
+            levels.map((level) => {
+                const js_content = `const level = ${JSON.stringify(level)}`
+                const file = new File([js_content], "level.js", {type: "application/javascript"})
+                const url = window.URL.createObjectURL(file)
+
+                let a = document.createElement("a")
+                a.style.display = "none"
+                a.href = url
+                a.download = "level.js"
+                document.body.appendChild(a)
+                a.click()
+                document.body.removeChild(a)
+            })
+        } catch (error) {
+            reject()
 }
-
-// const download_json = (button, json) => {
-//     const tilemap = []
-
-//     const json = JSON.stringify(tilemap)
-//     const file = new File([json], "file.json", {type: "application/json"})
-//     const url = window.URL.createObjectURL(file)
-
-//     let a = document.createElement("a")
-//     a.style.display = "none"
-//     a.href = url
-//     a.download = "test.json"
-//     document.body.appendChild(a)
-//     a.click()
-//     document.body.removeChild(a)
-// }
+        resolve()
+    })
+}
