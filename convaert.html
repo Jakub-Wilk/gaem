@@ -15,9 +15,9 @@
                 let images_as_levels
                 get_images_from_input(document.querySelector("input"))
                 .then(images => download_levels(images.map((image) => image_to_level(image, tilemap))))
-                // .catch((error) => {
-                //     document.querySelector("span").innerText = error
-                // })
+                .catch((error) => {
+                    document.querySelector("span").innerText = error
+                })
             }
         </script>
     </body>
