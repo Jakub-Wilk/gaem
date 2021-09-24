@@ -82,7 +82,7 @@ const download_levels = (levels) => {
     return new Promise((resolve, reject) => {
         try {
             levels.map((level) => {
-                const js_content = `levels.append(${JSON.stringify(level)})`
+                const js_content = `levels.push(${JSON.stringify(level)})`
                 const file = new File([js_content], "level.js", {type: "application/javascript"})
                 const url = window.URL.createObjectURL(file)
 
