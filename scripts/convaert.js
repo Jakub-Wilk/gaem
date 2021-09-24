@@ -10,9 +10,25 @@ const get_file_data_url = (file) => {
     })
 }
 
-const get_images_from_input = (input) => {
+const get_files_from_input = (input) => input.files
+
+const get_names_from_files = (files) => {
+    return Array.from(files).map((file) => file.name)
+}
+
+const display_file_names = (element, names) => {
+    if (names.length == 0) {
+        element.innerText = "No files chosen"
+    } else if (names.length == 1) {
+        element.innerText = `File: ${names[0]}`
+    } else {
+        element.innerText = `Files: ${names.join(", ")}`
+    }
+}
+
+const get_images_from_files = (files) => {
     return new Promise((resolve, reject) => {
-        const file_list = input.files
+        const file_list = files
         let images = []
 
         if (file_list.length == 0) {
@@ -54,7 +70,7 @@ const image_to_level = (image, tilemap) => {
         for (const row of Array(canvas.height).keys()) {
             const pixel_offset = (row * canvas.width + column) * 4
             let pixel_color = [pixel_data[pixel_offset], pixel_data[pixel_offset + 1], pixel_data[pixel_offset + 2]]
-            pixel_color = rgb_to_hex(pixel_color)
+            pixel_color = rgb_to_hex(pixel_color).toUpperCase()
             let tile = tilemap["color-to-id"][pixel_color]
             level[column].push(tile)
         }
@@ -66,7 +82,7 @@ const download_levels = (levels) => {
     return new Promise((resolve, reject) => {
         try {
             levels.map((level) => {
-                const js_content = `const level = ${JSON.stringify(level)}`
+                const js_content = `levels.append(${JSON.stringify(level)})`
                 const file = new File([js_content], "level.js", {type: "application/javascript"})
                 const url = window.URL.createObjectURL(file)
 

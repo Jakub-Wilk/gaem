@@ -2,22 +2,30 @@
 <html>
     <head>
         <title>Convaert</title>
+        <link rel="stylesheet" href="styles/fonts.css">
         <link rel="stylesheet" href="styles/convaert.css">
     </head>
     <body>
-        <input type="file" accept="image/*" multiple>
-        <span>_</span>
+        <input id="file-input" type="file" accept="image/*" multiple>
+        <label for="file-input">Choose files...</label>
+        <span class="files">No files chosen</span>
+        <span class="info">_</span>
         <div>Download</div>
-        <script src="scripts/convaert.js" async></script>
-        <script src="assets/tilemap.js" async></script>
+        <script src="scripts/convaert.js"></script>
+        <script src="assets/tilemap.js"></script>
         <script>
             document.querySelector("div").onclick = () => {
                 let images_as_levels
-                get_images_from_input(document.querySelector("input"))
+                files = get_files_from_input(document.querySelector("input"))
+                get_images_from_files(files)
                 .then(images => download_levels(images.map((image) => image_to_level(image, tilemap))))
                 .catch((error) => {
-                    document.querySelector("span").innerText = error
+                    document.querySelector(".info").innerText = error
                 })
+            }
+            document.querySelector("input").onchange = () => {
+                files = get_files_from_input(document.querySelector("input"))
+                display_file_names(document.querySelector(".files"), get_names_from_files(files))
             }
         </script>
     </body>
