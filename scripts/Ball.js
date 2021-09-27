@@ -10,8 +10,10 @@ class Ball {
     run_physics = (delta_time, canvas) => {
         if (this.x + this.radius >= canvas.width) {
             this.direction = -1
+            this.x = canvas.width - this.radius
         } else if (this.x - this.radius <= 0) {
             this.direction = 1
+            this.x = 0 + this.radius
         }
         const speed = this.speed * delta_time * this.direction
         this.x += speed
