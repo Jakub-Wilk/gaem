@@ -7,8 +7,8 @@
     </head>
     <body>
         <canvas class="gaem"></canvas>
+        <script src="scripts/Renderer.js"></script>
         <script src="scripts/Game.js"></script>
-        <script src="scripts/Ball.js"></script>
         <script src="scripts/functions.js"></script>
         <script src="assets/maps/levels/testlevel.js"></script>
         <script>
@@ -18,8 +18,6 @@
 
             resize_canvas(canvas, window)
             const game = new Game(canvas, levels)
-            const ball = new Ball(30, [canvas.width/2, canvas.height/2], 1000, 1)
-            game.add_object(ball)
             game.run()
         </script>
     </body>
